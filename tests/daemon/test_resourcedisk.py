@@ -21,6 +21,15 @@ from azurelinuxagent.daemon import *
 from azurelinuxagent.daemon.resourcedisk.default import ResourceDiskHandler
 
 class TestResourceDisk(AgentTestCase):
+    def test_mount_flags_string_blank(self):
+        partition = '/dev/sdb1'
+        mountpoint = '/mnt/resource'
+        options = ''
+        expected = 'mount /dev/sdb1 /mnt/resource'
+        rdh = ResourceDiskHandler()
+        mount_string = rdh.get_mount_string(options, partition, mountpoint)
+        self.assertEqual(expected, mount_string)
+
     def test_mount_flags_empty(self):
         partition = '/dev/sdb1'
         mountpoint = '/mnt/resource'
